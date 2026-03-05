@@ -1,0 +1,104 @@
+/* Custom CSS & Tailwind for DA5101 SPA Clone */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@font-face {
+    font-family: 'Wondra';
+    src: url('assets/fonts/Wondra-Licensed.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        /* Default body color matching DA5100 default but applied via Tailwind classes in HTML */
+        -webkit-font-smoothing: antialiased;
+    }
+}
+
+@layer utilities {
+    .font-display {
+        font-family: 'Wondra', 'Bebas Neue', 'Arial Black', sans-serif;
+    }
+
+    .font-accent {
+        font-family: 'Wondra', 'Segoe UI', sans-serif;
+    }
+
+    .font-body {
+        font-family: 'Inter', -apple-system, sans-serif;
+    }
+
+    @keyframes marquee {
+        0% {
+            transform: translateX(0);
+        }
+
+        100% {
+            transform: translateX(-50%);
+        }
+    }
+
+    .animate-marquee {
+        animation: marquee 30s linear infinite;
+    }
+
+    /* 3D Wave Pattern used across sections */
+    .bg-wave-dots {
+        background-color: transparent;
+        background-image: url("data:image/svg+xml,%3Csvg width='240' height='80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M 0 40 Q 60 0, 120 40 T 240 40' fill='none' stroke='rgba(0,0,0,0.04)' stroke-width='4' stroke-dasharray='0 14' stroke-linecap='round'/%3E%3Cpath d='M 0 50 Q 60 10, 120 50 T 240 50' fill='none' stroke='rgba(0,0,0,0.03)' stroke-width='3' stroke-dasharray='0 14' stroke-dashoffset='7' stroke-linecap='round'/%3E%3Cpath d='M 0 60 Q 60 20, 120 60 T 240 60' fill='none' stroke='rgba(0,0,0,0.02)' stroke-width='2' stroke-dasharray='0 14' stroke-linecap='round'/%3E%3C/svg%3E");
+        background-size: 240px 80px;
+    }
+
+    /* Slanted container mimicking da5100 shape if needed */
+    .clip-slant {
+        clip-path: polygon(0 0, 100% 8vw, 100% 100%, 0 100%);
+    }
+}
+
+/* SPA Logic / Page Toggling */
+.page {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.page.active {
+    display: block;
+    animation: fadeIn 0.4s ease forwards;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+/* Nav Link active states */
+.navItem.active {
+    color: #e85d04 !important;
+    /* Forces active state color */
+}
+
+/* Tabs Hide/Show Custom Logic */
+.tab-content {
+    display: none;
+    animation: fadeIn 0.4s ease forwards;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.tab-btn.active {
+    border-bottom: 2px solid #e85d04;
+    color: #e85d04;
+}

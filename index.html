@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drama Arena 5101</title>
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            orange: '#e85d04',
+                            orangeHover: '#d05303',
+                            light: '#f8f7f4',
+                            dark: '#1a1a1a',
+                            gray: '#f5f5f5',
+                            text: '#333333'
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-delayed': 'float 6s ease-in-out 3s infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body
+    class="bg-brand-light text-brand-text font-body antialiased selection:bg-brand-orange selection:text-white relative overflow-x-hidden">
+
+    <!-- Gemini Stars Background Decorations (Global) -->
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-30">
+        <!-- Center Right Star -->
+        <svg class="absolute top-[20%] right-[10%] w-16 h-16 animate-float text-brand-orange" viewBox="0 0 100 100"
+            fill="currentColor">
+            <path d="M50 0 C50 40 60 50 100 50 C60 50 50 60 50 100 C50 60 40 50 0 50 C40 50 50 40 50 0 Z"></path>
+        </svg>
+        <!-- Bottom Left Star -->
+        <svg class="absolute bottom-[20%] left-[5%] w-24 h-24 animate-float-delayed text-brand-orange"
+            viewBox="0 0 100 100" fill="currentColor">
+            <path d="M50 0 C50 40 60 50 100 50 C60 50 50 60 50 100 C50 60 40 50 0 50 C40 50 50 40 50 0 Z"></path>
+        </svg>
+    </div>
+
+    <!-- Header / Navbar (Flat Design, Sticky) -->
+    <header class="sticky top-0 w-full bg-brand-light border-b border-gray-200 z-50 transition-all duration-300">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex-shrink-0 flex items-center cursor-pointer navItem gap-3" data-page="beranda">
+                    <img src="assets/logo-icon.webp" alt="DA5101 Logo" class="h-10 w-auto object-contain">
+                    <h1 class="font-display text-2xl text-brand-dark tracking-tight hidden sm:block">DA<span
+                            class="text-brand-orange">5101</span></h1>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <nav id="navmenu" class="hidden lg:flex items-center space-x-8">
+                    <a href="#" data-page="beranda"
+                        class="navItem text-brand-text hover:text-brand-orange font-medium transition-colors active">Beranda</a>
+                    <a href="#" data-page="tentang"
+                        class="navItem text-brand-text hover:text-brand-orange font-medium transition-colors">Tentang</a>
+                    <a href="#" data-page="branding"
+                        class="navItem text-brand-text hover:text-brand-orange font-medium transition-colors">Branding</a>
+                    <a href="#" data-page="masukan"
+                        class="navItem text-brand-text hover:text-brand-orange font-medium transition-colors">Masukan</a>
+                </nav>
+
+                <!-- Mobile menu button -->
+                <div class="lg:hidden flex items-center">
+                    <button class="mobile-nav-toggle text-brand-dark hover:text-brand-orange focus:outline-none">
+                        <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="navmenu-mobile"
+            class="hidden lg:hidden bg-brand-light border-t border-gray-100 px-2 pt-2 pb-3 space-y-1 sm:px-3 absolute w-full shadow-lg">
+            <a href="#" data-page="beranda"
+                class="navItem block px-3 py-2 rounded-md font-medium text-brand-text hover:text-brand-orange hover:bg-orange-50 active">Beranda</a>
+            <a href="#" data-page="tentang"
+                class="navItem block px-3 py-2 rounded-md font-medium text-brand-text hover:text-brand-orange hover:bg-orange-50">Tentang</a>
+            <a href="#" data-page="branding"
+                class="navItem block px-3 py-2 rounded-md font-medium text-brand-text hover:text-brand-orange hover:bg-orange-50">Branding</a>
+            <a href="#" data-page="masukan"
+                class="navItem block px-3 py-2 rounded-md font-medium text-brand-text hover:text-brand-orange hover:bg-orange-50">Masukan</a>
+        </div>
+    </header>
+
+    <main class="relative z-10 w-full min-h-screen">
+
+        <!-- ==============================================
+             PAGE: BERANDA 
+             ============================================== -->
+        <div class="page page-beranda active w-full">
+
+            <!-- Hero Section -->
+            <section class="w-full min-h-[80vh] flex items-center relative overflow-hidden bg-brand-dark pt-16 pb-24">
+                <!-- Full Background Image -->
+                <div class="absolute inset-0 z-0">
+                    <img src="assets/img/documentary/hero.jpg" onerror="this.src='assets/img/portfolio/app-1.webp'"
+                        alt="Hero Background" class="object-cover w-full h-full opacity-30">
+                    <div class="absolute inset-0 bg-gradient-to-r from-brand-dark via-brand-dark/80 to-transparent">
+                    </div>
+                </div>
+
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+                    <div class="flex flex-col lg:flex-row items-center gap-12">
+                        <!-- Hero Text (Left Aligned) -->
+                        <div class="lg:w-[60%] flex flex-col items-start text-left">
+                            <div
+                                class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-orange/20 text-brand-orange mb-6 font-medium text-sm backdrop-blur-md border border-brand-orange/30">
+                                <svg class="w-4 h-4" viewBox="0 0 100 100" fill="currentColor">
+                                    <path
+                                        d="M50 0 C50 40 60 50 100 50 C60 50 50 60 50 100 C50 60 40 50 0 50 C40 50 50 40 50 0 Z">
+                                    </path>
+                                </svg>
+                                Official Of Five Art Collaboration 5101
+                            </div>
+                            <h2
+                                class="font-display text-5xl md:text-7xl lg:text-8xl text-white leading-[1.1] mb-6 shadow-sm">
+                                THE SHINING <br /><span class="text-brand-orange">DRAMA ARENA</span>
+                            </h2>
+                            <p
+                                class="text-lg md:text-xl text-gray-300 mb-8 max-w-2xl font-body italic border-l-4 border-brand-orange pl-4 shadow-sm">
+                                "Nyalakan Api Kebersamaan Wujudkan Idealisme Kehidupan"
+                            </p>
+                            <div class="flex gap-4">
+                                <a href="#" data-page="tentang"
+                                    class="navItem inline-flex items-center justify-center px-8 py-4 text-base font-bold text-white bg-brand-orange hover:bg-brand-orangeHover transition-colors rounded shadow-lg shadow-brand-orange/20">
+                                    Guide Book
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sponsors/Clients Marquee -->
+            <section class="py-12 bg-white relative z-10 border-b border-gray-100 overflow-hidden">
+                <div class="container mx-auto px-4 text-center mb-8">
+                    <p class="font-display text-gray-400 tracking-widest text-sm uppercase">Sponsored & Supported By</p>
+                </div>
+                <div class="relative flex overflow-x-hidden group py-4">
+                    <div
+                        class="flex animate-marquee whitespace-nowrap group-hover:[animation-play-state:paused] items-center space-x-24 px-12">
+                        <!-- Duplicated set 1 for infinite scroll -->
+                        <img src="assets/img/clients/client-1.webp"
+                            class="h-16 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity"
+                            alt="Client 1" onerror="this.src='assets/img/clients/client-1.png'">
+                        <img src="assets/img/clients/client-2.webp"
+                            class="h-16 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity"
+                            alt="Client 2" onerror="this.src='assets/img/clients/client-2.png'">
+                        <img src="assets/img/clients/client-3.webp"
+                            class="h-16 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity"
+                            alt="Client 3" onerror="this.src='assets/img/clients/client-3.png'">
+                        <img src="assets/img/clients/client-4.webp"
+                            class="h-16 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity"
+                            alt="Client 4" onerror="this.src='assets/img/clients/client-4.png'">
+                        <img src="assets/img/clients/client-5.webp"
+                            class="h-16 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity"
+                            alt="Client 5" onerror="this.src='assets/img/clients/client-5.png'">
+                        <img src="assets/img/clients/client-6.webp"
+                            class="h-16 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity"
+                            alt="Client 6" onerror="this.src='assets/img/clients/client-6.png'">
+                        <!-- Duplicated set 2 for infinite scroll -->
+                        <img src="assets/img/clients/client-1.webp"
+                            class="h-16 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity"
+                            alt="Client 1" onerror="this.src='assets/img/clients/client-1.png'">
+                        <img src="assets/img/clients/client-2.webp"
+                            class="h-16 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity"
+                            alt="Client 2" onerror="this.src='assets/img/clients/client-2.png'">
+                        <img src="assets/img/clients/client-3.webp"
+                            class="h-16 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity"
+                            alt="Client 3" onerror="this.src='assets/img/clients/client-3.png'">
+                        <img src="assets/img/clients/client-4.webp"
+                            class="h-16 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity"
+                            alt="Client 4" onerror="this.src='assets/img/clients/client-4.png'">
+                        <img src="assets/img/clients/client-5.webp"
+                            class="h-16 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity"
+                            alt="Client 5" onerror="this.src='assets/img/clients/client-5.png'">
+                        <img src="assets/img/clients/client-6.webp"
+                            class="h-16 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity"
+                            alt="Client 6" onerror="this.src='assets/img/clients/client-6.png'">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Filosofi Logo (Left Col title, Right Col Grid with Real Images) -->
+            <section class="py-24 bg-brand-dark text-brand-light relative z-10 clip-slant shadow-xl">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8 mt-12 mb-12">
+                    <div class="flex flex-col xl:flex-row gap-16">
+
+                        <!-- Left Column: Title & Intro -->
+                        <div class="xl:w-4/12 flex flex-col justify-start">
+                            <h3 class="font-display text-5xl md:text-6xl text-brand-orange mb-6">FILOSOFI
+                                LOGO<br />DRAMA ARENA 5101</h3>
+                            <p class="text-gray-400 text-lg leading-relaxed font-body">
+                                Logo Drama Arena 5101 memiliki makna yang dalam dan mencerminkan nilai-nilai yang
+                                dijunjung tinggi oleh santri. Setiap elemen logo memiliki simbolisme yang kuat,
+                                merepresentasikan nilai-nilai Gontor.
+                            </p>
+                        </div>
+
+                        <!-- Right Column: List of items grouped by Image -->
+                        <div class="xl:w-8/12 flex flex-col gap-16">
+
+                            <!-- Image Info Block 1 -->
+                            <div class="flex flex-col md:flex-row gap-8 items-start group">
+                                <div
+                                    class="w-full md:w-1/3 flex-shrink-0 bg-white rounded-xl overflow-hidden p-4 shadow-lg border border-gray-700 group-hover:border-brand-orange transition-colors duration-300">
+                                    <img src="assets/img/filosofi/4sisigaris-4sisikotak.webp"
+                                        alt="4 Sisi Garis dan Kotak" class="w-full h-auto object-contain">
+                                </div>
+                                <div class="w-full md:w-2/3">
+                                    <h4 class="font-display text-3xl mb-3 text-brand-orange tracking-wide">4 SISI GARIS
+                                    </h4>
+                                    <p class="text-base text-gray-300 leading-relaxed font-body mb-6">Melambangkan Motto
+                                        Pondok Modern Darussalam Gontor, yaitu : Berbudi Tinggi, Berbadan Sehat,
+                                        Berpengetahuan Luas, dan Berpikiran Bebas.</p>
+
+                                    <h4 class="font-display text-3xl mb-3 text-brand-orange tracking-wide">4 SISI
+                                        BERBENTUK KOTAK</h4>
+                                    <p class="text-base text-gray-300 leading-relaxed font-body">Melambangkan lingkup
+                                        persatuan dan kebersamaan yaitu tentang menyatukan perbedaan dalam bingkai yang
+                                        sama, agar terjalin kebersamaan yang lebih kuat dan bermakna.</p>
+                                </div>
+                            </div>
+
+                            <!-- Image Info Block 2 -->
+                            <div class="flex flex-col md:flex-row gap-8 items-start group">
+                                <div
+                                    class="w-full md:w-1/3 flex-shrink-0 bg-white rounded-xl overflow-hidden p-4 shadow-lg border border-gray-700 group-hover:border-brand-orange transition-colors duration-300">
+                                    <img src="assets/img/filosofi/5titik-cahaya.webp" alt="5 Titik dan Cahaya"
+                                        class="w-full h-auto object-contain">
+                                </div>
+                                <div class="w-full md:w-2/3">
+                                    <h4 class="font-display text-3xl mb-3 text-brand-orange tracking-wide">5 TITIK</h4>
+                                    <p class="text-base text-gray-300 leading-relaxed font-body mb-6">Melambangkan Panca
+                                        Jiwa Pondok Modern Darussalam Gontor: Keikhlasan, Kesederhanaan, Berdikari,
+                                        Ukhuwah Islamiyah, Kebebasan.</p>
+
+                                    <h4 class="font-display text-3xl mb-3 text-brand-orange tracking-wide">CAHAYA</h4>
+                                    <p class="text-base text-gray-300 leading-relaxed font-body">Cahaya (an-nūr) Seperti
+                                        lampu kecil yang menyala dalam kegelapan, kelas 5 dituntut tidak hanya menyimpan
+                                        cahaya bagi dirinya, tetapi juga menyalakan cahaya di sekelilingnya. Dengan ilmu
+                                        dan akhlak, menjadi teladan bagi santri, dan dapat menjadi lentera bagi
+                                        masyarakat, mampu membawa pencerahan di tengah kegelapan zaman.</p>
+                                </div>
+                            </div>
+
+                            <!-- Image Info Block 3 -->
+                            <div class="flex flex-col md:flex-row gap-8 items-start group">
+                                <div
+                                    class="w-full md:w-1/3 flex-shrink-0 bg-white rounded-xl overflow-hidden p-4 shadow-lg border border-gray-700 group-hover:border-brand-orange transition-colors duration-300">
+                                    <img src="assets/img/filosofi/tulisan-da.webp" alt="Tulisan D A"
+                                        class="w-full h-auto object-contain">
+                                </div>
+                                <div class="w-full md:w-2/3">
+                                    <h4 class="font-display text-3xl mb-3 text-brand-orange tracking-wide">TULISAN D
+                                    </h4>
+                                    <p class="text-base text-gray-300 leading-relaxed font-body mb-6">Mengambil dari
+                                        kata "Drama".</p>
+
+                                    <h4 class="font-display text-3xl mb-3 text-brand-orange tracking-wide">TULISAN A
+                                    </h4>
+                                    <p class="text-base text-gray-300 leading-relaxed font-body">Mengambil dari kata
+                                        "Arena".</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Testimonials (Kata-Kata Pembimbing) -->
+            <section class="py-24 bg-brand-light relative z-10 clip-slant">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8 mt-12 mb-12">
+                    <div class="text-center max-w-3xl mx-auto mb-16">
+                        <h2 class="font-display text-5xl md:text-6xl text-brand-dark mb-6">KATA KATA <span
+                                class="text-brand-orange">PEMBIMBING</span></h2>
+                        <p class="text-gray-600 text-lg font-body">Nasihat dan pesan dari asatidz pembimbing untuk
+                            kesuksesan DA5101.</p>
+                    </div>
+
+                    <!-- Horizontal Scrolling Snap Grid -->
+                    <div class="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-8 hide-scrollbar">
+                        <!-- Testimonial 1 -->
+                        <div
+                            class="snap-center shrink-0 w-[85vw] md:w-[400px] bg-white p-8 rounded-2xl shadow-xl border border-gray-100 relative">
+                            <svg class="w-10 h-10 text-orange-100 absolute top-6 left-6" fill="currentColor"
+                                viewBox="0 0 24 24">
+                                <path
+                                    d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                            </svg>
+                            <p class="text-gray-600 font-body leading-relaxed mb-6 mt-6 relative z-10 italic">"Teruslah
+                                berkarya, jadikan setiap tetes keringat kalian sebagai saksi perjungan dakwah melalui
+                                seni. Antum semua luar biasa!"</p>
+                            <div class="flex items-center gap-4">
+                                <img src="assets/img/testimonials/testimonials-1.jpg" alt="Ustadz"
+                                    class="w-14 h-14 rounded-full object-cover border-2 border-brand-orange"
+                                    onerror="this.src='https://ui-avatars.com/api/?name=Ustadz+A&background=e85d04&color=fff'">
+                                <div>
+                                    <h5 class="font-display text-xl text-brand-dark">Al-Ustadz Fulan</h5>
+                                    <p class="text-sm text-brand-orange font-body">Pembimbing DA5101</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Testimonial 2 -->
+                        <div
+                            class="snap-center shrink-0 w-[85vw] md:w-[400px] bg-white p-8 rounded-2xl shadow-xl border border-gray-100 relative">
+                            <svg class="w-10 h-10 text-orange-100 absolute top-6 left-6" fill="currentColor"
+                                viewBox="0 0 24 24">
+                                <path
+                                    d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                            </svg>
+                            <p class="text-gray-600 font-body leading-relaxed mb-6 mt-6 relative z-10 italic">"Seni
+                                adalah bahasa hati, tunjukkan pada dunia bahwa Gontor mampu mendidik pemuda yang tak
+                                hanya cerdas akalnya, tapi indah seninya."</p>
+                            <div class="flex items-center gap-4">
+                                <img src="assets/img/testimonials/testimonials-2.jpg" alt="Ustadz"
+                                    class="w-14 h-14 rounded-full object-cover border-2 border-brand-orange"
+                                    onerror="this.src='https://ui-avatars.com/api/?name=Ustadz+B&background=e85d04&color=fff'">
+                                <div>
+                                    <h5 class="font-display text-xl text-brand-dark">Al-Ustadz Fulan Bin Fulan</h5>
+                                    <p class="text-sm text-brand-orange font-body">Pembimbing DA5101</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Testimonial 3 -->
+                        <div
+                            class="snap-center shrink-0 w-[85vw] md:w-[400px] bg-white p-8 rounded-2xl shadow-xl border border-gray-100 relative">
+                            <svg class="w-10 h-10 text-orange-100 absolute top-6 left-6" fill="currentColor"
+                                viewBox="0 0 24 24">
+                                <path
+                                    d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                            </svg>
+                            <p class="text-gray-600 font-body leading-relaxed mb-6 mt-6 relative z-10 italic">"Ini bukan
+                                sekedar panggung, ini adalah laboratorium kehidupan. Teruslah bereksplorasi dan
+                                berkreasi tanpa batas!"</p>
+                            <div class="flex items-center gap-4">
+                                <img src="assets/img/testimonials/testimonials-3.jpg" alt="Ustadz"
+                                    class="w-14 h-14 rounded-full object-cover border-2 border-brand-orange"
+                                    onerror="this.src='https://ui-avatars.com/api/?name=Ustadz+C&background=e85d04&color=fff'">
+                                <div>
+                                    <h5 class="font-display text-xl text-brand-dark">Al-Ustadz Fulan Al-Fulany</h5>
+                                    <p class="text-sm text-brand-orange font-body">Pembimbing Drama Arena 5101</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <style>
+                    /* Hide scrollbar for grid */
+                    .hide-scrollbar::-webkit-scrollbar {
+                        display: none;
+                    }
+
+                    .hide-scrollbar {
+                        -ms-overflow-style: none;
+                        scrollbar-width: none;
+                    }
+                </style>
+            </section>
+        </div><!-- END page-beranda -->
+
+        <!-- ==============================================
+             PAGE: TENTANG (Tabs & Services)
+             ============================================== -->
+        <div class="page page-tentang w-full bg-brand-light">
+
+            <!-- Tabs Section -->
+            <section class="py-24 container mx-auto px-4 sm:px-6 lg:px-8">
+
+                <!-- Tab Headers (Mimicking DA5100 structure) -->
+                <ul class="flex flex-wrap border-b border-gray-200 mb-12" role="tablist">
+                    <li class="w-1/2 md:w-1/4 text-center">
+                        <a href="#"
+                            class="tab-btn active block py-4 text-lg font-display text-gray-500 hover:text-brand-orange transition-colors"
+                            data-target="tab-1">Tentang Acara</a>
+                    </li>
+                    <li class="w-1/2 md:w-1/4 text-center">
+                        <a href="#"
+                            class="tab-btn block py-4 text-lg font-display text-gray-500 hover:text-brand-orange transition-colors"
+                            data-target="tab-2">Apa Itu PMDG?</a>
+                    </li>
+                    <li class="w-1/2 md:w-1/4 text-center">
+                        <a href="#"
+                            class="tab-btn block py-4 text-lg font-display text-gray-500 hover:text-brand-orange transition-colors"
+                            data-target="tab-3">Profil Singkat</a>
+                    </li>
+                    <li class="w-1/2 md:w-1/4 text-center">
+                        <a href="#"
+                            class="tab-btn block py-4 text-lg font-display text-gray-500 hover:text-brand-orange transition-colors"
+                            data-target="tab-4">Peserta & Pengunjung</a>
+                    </li>
+                </ul>
+
+                <!-- Tab Contents -->
+                <div class="relative">
+
+                    <!-- Tab 1 -->
+                    <div id="tab-1" class="tab-content active">
+                        <div class="flex flex-col lg:flex-row gap-12 items-center">
+                            <div class="lg:w-1/2">
+                                <h3 class="font-display text-4xl text-brand-dark mb-6">DRAMA ARENA 5101</h3>
+                                <p class="text-gray-600 mb-4 font-body leading-relaxed">
+                                    Drama Arena Merupakan sebuah acara yang diselenggarakan oleh siswa kelas 5
+                                    Kulliyatu-l-Mu’allimin Al-Islamiyah (KMI) Pondok Modern Darussalam Gontor.
+                                </p>
+                                <ul class="space-y-3 mb-6 font-body text-gray-600">
+                                    <li class="flex items-start">
+                                        <svg class="w-5 h-5 text-brand-orange mt-1 mr-3 flex-shrink-0" fill="none"
+                                            stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M5 13l4 4L19 7"></path>
+                                        </svg>
+                                        Mendidik dan melatih kecakapan santri dalam kepemimpinan dan manajerial.
+                                    </li>
+                                    <li class="flex items-start">
+                                        <svg class="w-5 h-5 text-brand-orange mt-1 mr-3 flex-shrink-0" fill="none"
+                                            stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M5 13l4 4L19 7"></path>
+                                        </svg>
+                                        Menggali serta meningkatkan potensi segenap siswa untuk diekspresikan dalam
+                                        pagelaran seni.
+                                    </li>
+                                </ul>
+                            </div>
+                            <div
+                                class="lg:w-1/2 rounded-xl overflow-hidden border-4 border-white shadow-xl aspect-video relative group">
+                                <img src="assets/img/documentary/books-1.webp" alt="Ilustrasi Drama Arena"
+                                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                <div
+                                    class="absolute inset-0 bg-brand-orange/10 group-hover:bg-transparent transition-colors duration-500">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab 2 -->
+                    <div id="tab-2" class="tab-content">
+                        <div class="flex flex-col lg:flex-row gap-12 items-center">
+                            <div class="lg:w-1/2">
+                                <h3 class="font-display text-4xl text-brand-dark mb-6">APA ITU PMDG?</h3>
+                                <p class="text-gray-600 mb-4 font-body leading-relaxed">
+                                    Pondok Modern Darussalam Gontor (PMDG) adalah lembaga pendidikan Islam yang berfokus
+                                    pada pembentukan mental dan karakter peserta didiknya.
+                                </p>
+                            </div>
+                            <div
+                                class="lg:w-1/2 rounded-xl overflow-hidden border-4 border-white shadow-xl aspect-video relative group">
+                                <img src="assets/img/gontor/gedung-rabithah.jpg" alt="Gedung Rabithah PMDG"
+                                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                <div
+                                    class="absolute inset-0 bg-brand-dark/10 group-hover:bg-transparent transition-colors duration-500">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab 3 -->
+                    <div id="tab-3" class="tab-content">
+                        <div class="flex flex-col lg:flex-row gap-12 items-center">
+                            <div class="lg:w-1/2">
+                                <h3 class="font-display text-4xl text-brand-dark mb-6">PONDOK MODERN DARUSSALAM GONTOR
+                                </h3>
+                                <p class="text-gray-600 mb-4 font-body leading-relaxed text-sm">
+                                    Pondok Modern Darussalam Gontor (PMDG) terletak di Desa Gontor, Kecamatan Mlarak,
+                                    Kabupaten Ponorogo, Jawa Timur, Indonesia. Didirikan pada tanggal 20 September 1926,
+                                    bertepatan dengan 12 Rabi'ul Awwal 1345 H, oleh tiga bersaudara yang dikenal dengan
+                                    sebutan "Trimurti": K.H. Ahmad Sahal, K.H. Zainuddin Fananie, dan K.H. Imam
+                                    Zarkasyi. Saat ini, PMDG dipimpin oleh K.H. Hasan Abdullah Sahal, Drs. K.H. M. Akrim
+                                    Mariyat, Dipl.A.Ed., dan Prof. Dr. K.H. Amal Fathullah Zarkasyi, M.A.
+                                </p>
+                                <p class="text-gray-600 mb-4 font-body leading-relaxed text-sm">
+                                    PMDG memiliki dua jenjang pendidikan. Pertama, Kulliyyatu-l-Mu'allimin Al-Islamiyah
+                                    (KMI), yaitu program pendidikan tingkat menengah yang didirikan pada tahun 1936.
+                                    Saat ini, KMI telah mendapatkan penyetaraan jenjang pendidikan dari Kementerian
+                                    Agama Republik Indonesia dan Departemen Pendidikan Nasional, serta mendapatkan
+                                    pengakuan dari berbagai lembaga pendidikan di dalam dan luar negeri. Kedua,
+                                    Universitas Darussalam (UNIDA) Gontor, yaitu jenjang perguruan tinggi. UNIDA Gontor
+                                    telah memiliki delapan fakultas untuk program sarjana.
+                                </p>
+                                <p class="text-gray-600 mb-4 font-body leading-relaxed text-sm">
+                                    Kurikulum di PMDG bersifat integratif, menggabungkan ilmu agama dan ilmu umum
+                                    menjadi satu kesatuan. Pendekatan integrasi ini mencakup seluruh bidang kecakapan:
+                                    intelektual, emosional, dan spiritual, serta meliputi aspek pengembangan pribadi
+                                    santri, yaitu kognitif, afektif, dan psikomotorik.
+                                </p>
+                                <p class="text-gray-600 mb-4 font-body leading-relaxed text-sm">
+                                    Tenaga pendidik dan pengajar di PMDG merupakan lulusan KMI Gontor, UNIDA Gontor,
+                                    serta perguruan tinggi lainnya di dalam dan luar negeri. Sementara itu, para santri
+                                    berasal dari lulusan Sekolah Dasar dan Sekolah Menengah, yang datang dari berbagai
+                                    penjuru tanah air maupun mancanegara. Saat ini, jumlah santri, guru, dan seluruh
+                                    keluarga besar PMDG telah mencapai 28.000 orang di seluruh Indonesia.
+                                </p>
+                                <p class="text-gray-600 font-body leading-relaxed text-sm">
+                                    Para santri tersebar di 20 kampus PMDG, yang terdiri dari 12 kampus putra, 8 kampus
+                                    putri, serta kampus UNIDA Gontor.
+                                </p>
+                            </div>
+                            <div
+                                class="lg:w-1/2 rounded-xl overflow-hidden border-4 border-white shadow-xl aspect-video relative group">
+                                <img src="assets/img/gontor/pembukaan-2018.jpg" alt="PMDG"
+                                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                <div
+                                    class="absolute inset-0 bg-brand-dark/10 group-hover:bg-transparent transition-colors duration-500">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab 4 -->
+                    <div id="tab-4" class="tab-content">
+                        <div class="flex flex-col lg:flex-row gap-12 items-center">
+                            <div class="lg:w-1/2">
+                                <h3 class="font-display text-4xl text-brand-dark mb-6">PROFIL PESERTA ACARA</h3>
+                                <p class="text-gray-600 mb-8 font-body leading-relaxed">
+                                    Acara ini diikuti oleh seluruh siswa kelas 5 Kulliyatu-l-Mu'allimin Al-Islamiyah
+                                    (KMI) tahun ajaran 1446-1447/2025-2026, yang berjumlah 720 siswa.
+                                </p>
+                                <h3 class="font-display text-4xl text-brand-dark mb-6">PROFIL PENGUNJUNG ACARA</h3>
+                                <p class="text-gray-600 font-body leading-relaxed">
+                                    Acara ini akan dikunjungi lebih dari 5.000 orang penonton, di antaranya:<br><br>
+                                    1. Seluruh Siswa KMI Pondok Modern Darussalam Gontor.<br>
+                                    2. Seluruh Guru KMI Pondok Modern Darussalam Gontor.<br>
+                                    3. Seluruh Keluarga Besar Pondok Modern Darussalam Gontor.<br>
+                                    4. Tamu Undangan Lainnya
+                                </p>
+                            </div>
+                            <div
+                                class="lg:w-1/2 rounded-xl overflow-hidden border-4 border-white shadow-xl aspect-video relative group">
+                                <img src="assets/img/documentary/books-1.webp" alt="Pengunjung"
+                                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                <div
+                                    class="absolute inset-0 bg-brand-orange/10 group-hover:bg-transparent transition-colors duration-500">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </section>
+
+            <!-- Services Section (Bentuk Acara 4 E's) -->
+            <section class="py-24 bg-brand-dark text-white relative clip-slant">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8 mt-12 mb-12">
+                    <div class="text-center max-w-3xl mx-auto mb-16">
+                        <h2 class="font-display text-5xl md:text-6xl text-brand-orange mb-6">BENTUK ACARA</h2>
+                        <p class="text-gray-400 text-lg font-body">Dikemas dalam empat unsur utama 4E.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+                        <!-- Service 1 -->
+                        <div
+                            class="bg-gray-800 p-6 md:p-10 rounded-xl hover:bg-brand-orange transition-colors duration-300 group">
+                            <div
+                                class="w-14 h-14 bg-brand-dark rounded flex items-center justify-center mb-6 text-brand-orange group-hover:text-white transition-colors">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
+                                    </path>
+                                </svg>
+                            </div>
+                            <h4 class="font-display text-3xl mb-4">EDUCATING</h4>
+                            <p class="text-gray-400 group-hover:text-white/90">Acara yang mengedukasi penonton dengan
+                                penampilan yang mendidik.</p>
+                        </div>
+
+                        <!-- Service 2 -->
+                        <div
+                            class="bg-gray-800 p-6 md:p-10 rounded-xl hover:bg-brand-orange transition-colors duration-300 group">
+                            <div
+                                class="w-14 h-14 bg-brand-dark rounded flex items-center justify-center mb-6 text-brand-orange group-hover:text-white transition-colors">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z">
+                                    </path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <h4 class="font-display text-3xl mb-4">ENTERTAINING</h4>
+                            <p class="text-gray-400 group-hover:text-white/90">Acara yang dirancang untuk memberikan
+                                kesenangan, hiburan dan inspirasi.</p>
+                        </div>
+
+                        <!-- Service 3 -->
+                        <div
+                            class="bg-gray-800 p-6 md:p-10 rounded-xl hover:bg-brand-orange transition-colors duration-300 group">
+                            <div
+                                class="w-14 h-14 bg-brand-dark rounded flex items-center justify-center mb-6 text-brand-orange group-hover:text-white transition-colors">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z">
+                                    </path>
+                                </svg>
+                            </div>
+                            <h4 class="font-display text-3xl mb-4">ELEGANT</h4>
+                            <p class="text-gray-400 group-hover:text-white/90">Tampilan harmonis, berkelas dan
+                                berkualitas tinggi.</p>
+                        </div>
+
+                        <!-- Service 4 -->
+                        <div
+                            class="bg-gray-800 p-6 md:p-10 rounded-xl hover:bg-brand-orange transition-colors duration-300 group">
+                            <div
+                                class="w-14 h-14 bg-brand-dark rounded flex items-center justify-center mb-6 text-brand-orange group-hover:text-white transition-colors">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                                    </path>
+                                </svg>
+                            </div>
+                            <h4 class="font-display text-3xl mb-4">ENJOYABLE</h4>
+                            <p class="text-gray-400 group-hover:text-white/90">Menciptakan suasana bahagia, rileks dan
+                                nyaman dinikmati.</p>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+        </div><!-- END page-tentang -->
+
+
+        <!-- ==============================================
+             PAGE: BRANDING
+             ============================================== -->
+        <div class="page page-branding w-full bg-wave-dots">
+            <section
+                class="py-24 container mx-auto px-4 sm:px-6 lg:px-8 min-h-[70vh] flex flex-col items-center justify-start">
+
+                <div class="text-center mb-16 max-w-4xl mx-auto">
+                    <h2 class="font-display text-5xl md:text-7xl text-brand-dark mb-6">MAIN BRANDING AND <br /><span
+                            class="text-brand-orange">LOGO INTRODUCTION</span></h2>
+                    <p class="text-xl text-gray-600 font-body italic mb-8">
+                        "Nyalakan Api Kebersamaan Wujudkan Idealisme Kehidupan"
+                    </p>
+
+                    <div
+                        class="inline-flex flex-col items-center justify-center p-8 bg-white shadow-xl border-t-4 border-brand-orange rounded-2xl w-full mb-12">
+                        <p class="font-display text-2xl text-brand-dark mb-2">Bismillahirrahmanirrahim</p>
+                        <p class="font-display text-2xl text-brand-dark mb-8">Assalamualaikum Warahmatullahi Wabarakatuh
+                        </p>
+
+                        <p class="text-gray-600 font-body leading-relaxed mb-4">
+                            Official Logo Drama Arena The Shining Five Art Collaboration Dengan tema "GONTOR MINIATUR
+                            KEHIDUPAN ISLAMI"
+                            dan bermotokan "Nyalakan Api Kebersamaan Wujudkan Idealisme Kehidupan".
+                        </p>
+                        <p class="text-gray-600 font-body leading-relaxed">
+                            Syukron Jazakumullah Khairan.<br />Wassalamualaikum Warahmatullahi Wabarakatuh.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Ide Pokok Section -->
+                <div
+                    class="w-full max-w-5xl mx-auto bg-brand-dark rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row mb-16">
+                    <div
+                        class="bg-brand-orange p-12 md:w-2/5 flex flex-col justify-center items-center text-center text-white relative">
+                        <!-- Floating Gem Stars -->
+                        <svg class="absolute top-8 left-8 w-6 h-6 animate-float text-white opacity-50"
+                            viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9L12 2Z"></path>
+                        </svg>
+                        <svg class="absolute bottom-12 right-12 w-8 h-8 animate-float-delayed text-white opacity-50"
+                            viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9L12 2Z"></path>
+                        </svg>
+
+                        <h3 class="font-display text-6xl shadow-sm mb-4">IDE POKOK</h3>
+                        <div class="h-1 w-16 bg-white mb-4"></div>
+                        <h4 class="font-display text-4xl shadow-sm mb-4">DRAMA ARENA 5101</h4>
+                        <h2 class="font-display text-5xl md:text-6xl text-white mt-8 tracking-wider">
+                            "URIP IKU URUP"
+                        </h2>
+                    </div>
+
+                    <div class="p-12 md:w-3/5 bg-white flex flex-col justify-center relative">
+                        <div class="text-center mb-6">
+                            <p class="font-display text-4xl text-brand-orange mb-2">خَيْرُ النَّاسِ أَنْفَعُهُمْ
+                                لِلنَّاسِ</p>
+                            <p class="font-body text-gray-800 font-semibold italic text-lg">"Sebaik-baik manusia adalah
+                                yang paling bermanfaat bagi manusia."</p>
+                        </div>
+
+                        <p class="font-body text-gray-600 leading-relaxed text-sm mb-4 text-justify">
+                            Bermakna bahwa hidup sejatinya adalah tentang memberikan manfaat dan penerangan kepada
+                            sesama tanpa menyembunyikan kebenaran. Filosofi ini merupakan manifestasi ajaran Islam dalam
+                            budaya Jawa, yang menyadarkan kita bahwa kebenaran sejati dan aturan hidup berasal mutlak
+                            dari Allah, sementara manusia bertugas menyebarkan kebaikan tersebut selagi nyawa masih
+                            dikandung badan.
+                        </p>
+                        <p class="font-body text-gray-600 leading-relaxed text-sm mb-4 text-justify">
+                            Sebaik-baik manusia adalah orang yang bermanfaat bagi manusia lainnya. Dari kutipan hadist
+                            tersebut selaras dengan ungkapan "Urip Iku Urup", sebuah ungkapan yang sering digaungkan di
+                            Pondok Modern Darussalam Gontor.
+                        </p>
+                        <p class="font-body text-gray-600 leading-relaxed text-sm text-justify">
+                            Dengan demikian kutipan dan ungkapan diatas bukan hanya sekedar tulisan saja tapi merupakan
+                            sebuah filosofi dan nilai-nilai yang memiliki makna yang dalam. Menjadi manusia bukan hanya
+                            sekedar hidup tapi perlu untuk menjadi teladan dan bermanfaat bagi umat manusia. Manusia
+                            berguna adalah manusia yang menebar bibit-bibit manfaat dan memiliki kegunaan bagi orang
+                            disekitarnya. Berguna bukan berarti diperdaya atau dimanfaatkan justru berguna adalah
+                            memiliki suatu hal yang dapat memberikan kebaikan dan kemaslahatan bagi manusia-manusia
+                            lainnya. Maka dari itu harapannya generasi-generasi penerus dapat menjadi manusia yang
+                            memiliki manfaat dan berguna bagi umat islam di seluruh dunia.
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </div><!-- END page-branding -->
+
+
+        <!-- ==============================================
+             PAGE: MASUKAN
+             ============================================== -->
+        <div class="page page-masukan w-full bg-brand-light">
+            <section
+                class="py-24 container mx-auto px-4 sm:px-6 lg:px-8 text-center min-h-[60vh] flex flex-col items-center justify-center">
+                <h2 class="font-display text-5xl md:text-7xl text-brand-dark mb-6">MASUKAN & <span
+                        class="text-brand-orange">HARAPAN</span></h2>
+                <p class="text-xl text-gray-600 max-w-2xl font-body mb-10">Kirimkan masukan atau harapan anda untuk
+                    mensukseskan acara ini.</p>
+                <div class="w-full max-w-lg">
+                    <input type="text" placeholder="Tulis masukan di sini..."
+                        class="w-full px-6 py-4 rounded-lg border-2 border-gray-200 focus:border-brand-orange outline-none font-body mb-4 bg-white">
+                    <button
+                        class="w-full bg-brand-dark text-white font-bold py-4 rounded-lg hover:bg-brand-orange transition-colors">KIRIM</button>
+                </div>
+            </section>
+        </div><!-- END page-masukan -->
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-brand-dark text-brand-light py-16 relative z-20 border-t-4 border-brand-orange">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left mb-12">
+
+                <!-- Brand Info -->
+                <div class="flex flex-col items-center md:items-start">
+                    <div class="flex items-center gap-3 mb-4">
+                        <img src="assets/logo-icon.webp" alt="DA5101 Logo" class="h-12 w-auto object-contain">
+                        <h2 class="font-display text-3xl font-bold text-white tracking-tight">Drama Arena <span
+                                class="text-brand-orange">5101</span></h2>
+                    </div>
+                    <p class="text-gray-400 font-body text-sm leading-relaxed max-w-sm">
+                        "Nyalakan Api Kebersamaan Wujudkan Idealisme Kehidupan"
+                    </p>
+                </div>
+
+                <!-- Alamat -->
+                <div>
+                    <h3 class="font-display text-2xl text-white mb-4">ALAMAT</h3>
+                    <p class="text-gray-400 font-body text-sm leading-relaxed max-w-sm mx-auto md:mx-0">
+                        Ds. Gontor, Kec. Mlarak,<br>
+                        Kab. Ponorogo, Prov. Jawa Timur, 63472
+                    </p>
+                </div>
+
+                <!-- Kontak -->
+                <div>
+                    <h3 class="font-display text-2xl text-white mb-4">KONTAK</h3>
+                    <ul class="text-gray-400 font-body text-sm space-y-2">
+                        <li><span class="text-brand-orange font-bold mr-2">Sekretariat:</span> (0352) 311766</li>
+                        <li><span class="text-brand-orange font-bold mr-2">WA:</span> 0851-7512-1926</li>
+                        <li><span class="text-brand-orange font-bold mr-2">Email:</span> <a
+                                href="mailto:dramaarena5101@gontor.ac.id"
+                                class="hover:text-white transition-colors">dramaarena5101@gontor.ac.id</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div
+                class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-center gap-4">
+                <p class="text-gray-500 font-body text-sm">&copy; Copyright Drama Arena All Rights Reserved</p>
+                <div class="flex space-x-4">
+                    <!-- Social Placeholders -->
+                    <a href="#"
+                        class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-brand-orange hover:text-white transition-colors">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z" />
+                        </svg>
+                    </a>
+                    <a href="#"
+                        class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-brand-orange hover:text-white transition-colors">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
